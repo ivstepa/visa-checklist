@@ -42,8 +42,19 @@
     margin: 0 auto;
   }
 
+  .sticky-head {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    margin-top: -2rem;
+    padding: 2rem 0 1.75rem;
+    background: var(--bg);
+    border-bottom: 0.5px solid var(--border);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+  }
+
   header {
-    margin-bottom: 2rem;
+    margin-bottom: 1.25rem;
   }
 
   header h1 {
@@ -95,7 +106,7 @@
     height: 5px;
     background: var(--bg3);
     border-radius: 99px;
-    margin-bottom: 2rem;
+    margin-bottom: 0;
     overflow: hidden;
   }
 
@@ -207,18 +218,20 @@
 </head>
 <body>
 <div class="container">
-  <header>
-    <h1>Renovación Visa Nómada Digital 🇪🇸</h1>
-    <p>Marca cada documento cuando lo tengas listo. Se guarda automáticamente en tu navegador.</p>
-  </header>
+  <div class="sticky-head">
+    <header>
+      <h1>Renovación Visa Nómada Digital 🇪🇸</h1>
+      <p>Marca cada documento cuando lo tengas listo. Se guarda automáticamente en tu navegador.</p>
+    </header>
 
-  <div class="top-bar">
-    <div class="stats"><span id="done">0</span> / <span id="total">0</span> documentos listos</div>
-    <button class="reset" onclick="resetAll()">Reiniciar todo</button>
-  </div>
+    <div class="top-bar">
+      <div class="stats"><span id="done">0</span> / <span id="total">0</span> documentos listos</div>
+      <button class="reset" onclick="resetAll()">Reiniciar todo</button>
+    </div>
 
-  <div class="progress-track">
-    <div class="progress-bar" id="bar"></div>
+    <div class="progress-track">
+      <div class="progress-bar" id="bar"></div>
+    </div>
   </div>
 
   <div id="sections"></div>
