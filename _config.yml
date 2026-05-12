@@ -1,0 +1,8 @@
+title: "Visa Nómada Digital — Documentos"
+description: "Checklist de documentos"
+
+defaults:
+  - scope:
+      path: "index.html"
+    values:
+      layout: false
