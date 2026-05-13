@@ -38,7 +38,7 @@
   }
 
   .container {
-    max-width: 720px;
+    max-width: 960px;
     margin: 0 auto;
   }
 
@@ -47,7 +47,7 @@
     top: 0;
     z-index: 40;
     margin-top: -2rem;
-    padding: 2rem 0 1.75rem;
+    padding: 2rem 1.125rem 1.75rem;
     background: var(--bg);
     border-bottom: 0.5px solid var(--border);
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
@@ -208,6 +208,72 @@
   .badge-fam  { background: var(--blue-bg);  color: #5ca8f5; }
   .badge-both { background: var(--amber-bg); color: #f5b84a; }
 
+  .badge-tr {
+    font-size: 10px;
+    font-weight: 500;
+    padding: 2px 7px;
+    border-radius: 99px;
+    letter-spacing: 0.02em;
+    flex-shrink: 0;
+  }
+
+  .badge-tr-no  { background: rgba(255,255,255,0.06); color: var(--text3); }
+  .badge-tr-yes { background: rgba(239,159,39,0.18); color: #f0b04a; }
+
+  .badge-tr-split {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .badge-tr-ico {
+    width: 13px;
+    height: 13px;
+    flex-shrink: 0;
+    opacity: 0.92;
+  }
+
+  .doc-drive {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .doc-drive .drive-label {
+    font-size: 11px;
+    color: var(--text3);
+    flex-shrink: 0;
+  }
+
+  .doc-drive input.drive-url {
+    flex: 1;
+    min-width: 180px;
+    font-size: 12px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 0.5px solid var(--border2);
+    background: var(--bg);
+    color: var(--text);
+    font-family: inherit;
+  }
+
+  .doc-drive input.drive-url:focus {
+    outline: none;
+    border-color: var(--blue);
+    box-shadow: 0 0 0 2px rgba(55,138,221,0.2);
+  }
+
+  .doc-drive a.drive-open {
+    font-size: 12px;
+    color: var(--blue);
+    text-decoration: none;
+    flex-shrink: 0;
+  }
+
+  .doc-drive a.drive-open:hover { text-decoration: underline; }
+
   footer {
     margin-top: 3rem;
     font-size: 12px;
@@ -221,7 +287,7 @@
   <div class="sticky-head">
     <header>
       <h1>Renovación Visa Nómada Digital 🇪🇸</h1>
-      <p>Marca cada documento cuando lo tengas listo. Se guarda automáticamente en tu navegador.</p>
+      <p>Una fila ≈ un PDF de tu carpeta VISA: marca listo, pega el enlace de Drive y revisa la etiqueta de traducción.</p>
     </header>
 
     <div class="top-bar">
@@ -236,124 +302,212 @@
 
   <div id="sections"></div>
 
-  <footer>El progreso se guarda en una cookie de tu navegador · No se envían datos a ningún servidor</footer>
+  <footer>Lista detallada (v4): marcas, enlaces y traducción se guardan en una cookie · No se envían datos a ningún servidor</footer>
 </div>
 
 <script>
 const DATA = [
   {
-    title: "Formulario de solicitud",
+    title: "Solicitud y tasas",
     items: [
-      { id:"f1", name:"Modelo MIT — titular", note:"Firmado digitalmente o a mano", who:"you" },
-      { id:"f2", name:"Modelo MIT — esposa", note:"Firmado por ella", who:"fam" },
-      { id:"f3", name:"Modelo MIT — hijos (uno por cada hijo)", note:"Firmado por ti como representante legal", who:"fam" },
-    ]
+      { id: "f1", name: "Modelo MIT — titular (PDF)", note: "Firmado digitalmente o a mano.", who: "you", translate: false },
+      { id: "f2", name: "Modelo MIT — esposa (PDF)", note: "Firmado por Katarina.", who: "fam", translate: false },
+      { id: "f_ale", name: "Modelo MIT — hijo Aleksej (PDF)", note: "Firmado por ti como representante legal.", who: "fam", translate: false },
+      { id: "f_mat", name: "Modelo MIT — hijo Matija (PDF)", note: "Firmado por ti como representante legal.", who: "fam", translate: false },
+      { id: "t1", name: "Tasa 790-038 — titular (justificante)", note: "Pago ~80–100 €.", who: "you", translate: false },
+      { id: "t2", name: "Tasa 790-038 — esposa (justificante)", note: "Misma tasa, justificante a su nombre.", who: "fam", translate: false },
+      { id: "t_ale", name: "Tasa 790-038 — hijo Aleksej (justificante)", note: "Un justificante por hijo.", who: "fam", translate: false },
+      { id: "t_mat", name: "Tasa 790-038 — hijo Matija (justificante)", note: "Un justificante por hijo.", who: "fam", translate: false },
+    ],
   },
   {
-    title: "Tasas",
+    title: "Pasaportes y TIE",
     items: [
-      { id:"t1", name:"Tasa 790-038 — titular", note:"Justificante de pago (~80-100 €)", who:"you" },
-      { id:"t2", name:"Tasa 790-038 — esposa", note:"Justificante de pago (~80-100 €)", who:"fam" },
-      { id:"t3", name:"Tasa 790-038 — hijos (una por cada hijo)", note:"Justificante de pago (~80-100 €)", who:"fam" },
-    ]
+      { id: "p_ivan", name: "Pasaporte — Ivan Stepanovic (todas las páginas)", note: "PDF en carpeta VISA.", who: "you", translate: false },
+      { id: "p_kat_cur", name: "Pasaporte actual — Katarina Stepanovic", note: "Todas las páginas.", who: "fam", translate: false },
+      { id: "p_kat_old", name: "Pasaporte antiguo — Katarina Stepanovic", note: "Historial de viajes si aplica.", who: "fam", translate: false },
+      { id: "p_ale_cur", name: "Pasaporte actual — Aleksej Stepanovic", note: "Todas las páginas.", who: "fam", translate: false },
+      { id: "p_ale_old", name: "Pasaporte antiguo — Aleksej Stepanovic", note: "Historial de viajes si aplica.", who: "fam", translate: false },
+      { id: "p_mat_cur", name: "Pasaporte actual — Matija Stepanovic", note: "Todas las páginas.", who: "fam", translate: false },
+      { id: "p_mat_old", name: "Pasaporte antiguo — Matija Stepanovic", note: "Historial de viajes si aplica.", who: "fam", translate: false },
+      { id: "tie_ivan", name: "TIE — Ivan Stepanovic", note: "Tarjeta de residencia (anverso/reverso).", who: "you", translate: false },
+      { id: "tie_kat", name: "TIE — Katarina Stepanovic", note: "Tarjeta de residencia.", who: "fam", translate: false },
+      { id: "tie_ale", name: "TIE — Aleksej Stepanovic", note: "Tarjeta de residencia.", who: "fam", translate: false },
+      { id: "tie_mat", name: "TIE — Matija Stepanovic", note: "Tarjeta de residencia.", who: "fam", translate: false },
+    ],
   },
   {
-    title: "Identidad y pasaportes",
+    title: "Sanidad pública, mutualista y SIP",
     items: [
-      { id:"p1", name:"Pasaporte — titular (todas las páginas)", note:"Incluir páginas en blanco", who:"you" },
-      { id:"p2", name:"Pasaporte — esposa (todas las páginas)", note:"Incluir páginas en blanco", who:"fam" },
-      { id:"p3", name:"Pasaporte — hijos (todas las páginas)", note:"Incluir páginas en blanco", who:"fam" },
-      { id:"p4", name:"NIE — titular", note:"Copia escaneada", who:"you" },
-      { id:"p5", name:"NIE — esposa e hijos", note:"Copia escaneada de cada uno", who:"fam" },
-    ]
+      { id: "sm_pub", name: "Documento acreditativo público — Ivan Stepanovic (Seguridad Social)", note: "Derecho a asistencia vía SS.", who: "you", translate: false },
+      { id: "sm_san", name: "Documento de acreditación del derecho a asistencia sanitaria — Sanitas", note: "Cobertura mutualista.", who: "both", translate: false },
+      { id: "sip_mat", name: "SIP / tarjeta sanitaria — Matija Stepanovic", note: "Documento individual.", who: "fam", translate: false },
+      { id: "sip_ale", name: "SIP / tarjeta sanitaria — Aleksej Stepanovic", note: "Documento individual.", who: "fam", translate: false },
+      { id: "sip_kat", name: "SIP / tarjeta sanitaria — Katarina Stepanovic", note: "Documento individual.", who: "fam", translate: false },
+    ],
   },
   {
-    title: "Acreditación de ingresos (autónomo)",
+    title: "Facturas a HealNow (una por PDF)",
     items: [
-      { id:"i1", name:"Últimas 3 o 4 facturas de prestación de servicios a HealNow", note:"Idealmente bilingüe (inglés/español) — mínimo ~4.500 €/mes para familia de 4", who:"you" },
-      { id:"i2", name:"Extractos bancarios con abonos procedentes de HealNow", note:"Últimos 3–4 pagos recibidos desde EE. UU. (Wise u otro banco)", who:"you" },
-      { id:"i3", name:"Declaración de la Renta (IRPF) — ejercicio 2024", note:"Solo el Modelo 100 presentado por el año 2024", who:"you" },
-      { id:"i210", name:"Modelo 210 — ejercicio 2023", note:"Autoliquidación o declaración del 2023; lo prepara tu gestor si procede en tu caso", who:"you" },
-      { id:"i4", name:"Modelo 130 — IRPF en pago fraccionado (1.er trimestre)", note:"Pagos fraccionados de autónomo, lo saca tu gestor", who:"you" },
-      { id:"i5", name:"Modelo 303 — IVA trimestral (1.er trimestre)", note:"Lo saca tu gestor", who:"you" },
-    ]
+      { id: "fac_003", name: "Faktura 0032026 — febrero 2026 — Ivan Stepanovic", note: "Factura emitida a HealNow.", who: "you", translate: true },
+      { id: "fac_004", name: "Faktura 0042026 — Development Incentive — Ivan Stepanovic", note: "Factura emitida a HealNow.", who: "you", translate: true },
+      { id: "fac_005", name: "Faktura 0052026 — marzo 2026 — Ivan Stepanovic", note: "Factura emitida a HealNow.", who: "you", translate: true },
+      { id: "fac_006", name: "Faktura 0062026 — abril 2026 — Ivan Stepanovic", note: "Factura emitida a HealNow.", who: "you", translate: true },
+    ],
   },
   {
-    title: "Documentos de la empresa (HealNow)",
+    title: "Extractos bancarios Wise (abonos HealNow)",
     items: [
-      { id:"e1", name:"Certificado de buena situación societaria — HealNow", note:"Emitido por el Secretario de Estado de Delaware, con Apostilla de La Haya", who:"you" },
-      { id:"e3", name:"Contrato de prestación de servicios con HealNow", note:"Si no ha cambiado nada, puede valer el mismo de antes", who:"you" },
-      { id:"e4", name:"Carta de HealNow como contratista independiente", note:"Debe incluir: que eres contratista independiente, salario mensual (~4.500 €) y autorización para trabajar 100% remoto desde España", who:"you" },
-      { id:"e5", name:"Confirmación de pagos por parte de HealNow", note:"Últimas 3–4 transferencias emitidas desde su parte", who:"you" },
-    ]
+      { id: "exw_003", name: "Extracto con sello Wise — factura #0032026", note: "Abono correspondiente a la factura 003.", who: "you", translate: false },
+      { id: "exw_004", name: "Extracto con sello Wise — factura #0042026", note: "Abono correspondiente a la factura 004.", who: "you", translate: false },
+      { id: "exw_005", name: "Extracto con sello Wise — factura #0052026", note: "Abono correspondiente a la factura 005.", who: "you", translate: false },
+      { id: "exw_006", name: "Extracto con sello Wise — factura #0062026", note: "Abono correspondiente a la factura 006.", who: "you", translate: false },
+    ],
   },
   {
-    title: "Seguridad Social y Hacienda",
+    title: "Confirmaciones de transferencia Wise",
     items: [
-      { id:"ss1", name:"Certificado corriente de pago — Seguridad Social", note:"Lo descarga tu gestor en la Sede Electrónica de la SS con tu certificado digital", who:"you" },
-      { id:"ss2", name:"Certificado corriente de pago — AEAT (Hacienda)", note:"Lo descarga tu gestor online", who:"you" },
-      { id:"ss3", name:"Resolución de Alta en el RETA", note:"El documento de cuando te diste de alta como autónomo", who:"you" },
-      { id:"ss4", name:"Informe de Vida Laboral actualizado", note:"Se descarga en la Sede Electrónica de la Seguridad Social", who:"you" },
-    ]
+      { id: "wcf_003", name: "Wise — confirmación de transferencia #0032026", note: "PDF de confirmación Wise.", who: "you", translate: false },
+      { id: "wcf_004", name: "Wise — confirmación de transferencia #0042026", note: "PDF de confirmación Wise.", who: "you", translate: false },
+      { id: "wcf_005", name: "Wise — confirmación de transferencia #0052026", note: "PDF de confirmación Wise.", who: "you", translate: false },
+      { id: "wcf_006", name: "Wise — confirmación de transferencia #0062026", note: "PDF de confirmación Wise.", who: "you", translate: false },
+    ],
   },
   {
-    title: "Seguro médico",
+    title: "Solvencia y otros bancos",
     items: [
-      { id:"sm1", name:"Documento de acreditación del derecho a asistencia sanitaria", note:"Descargarlo de la Seguridad Social — cubre al titular, esposa e hijos como beneficiarios", who:"both" },
-    ]
+      { id: "bn_bal", name: "Balances de las cuentas — Wise", note: "Resumen de saldos Wise.", who: "you", translate: false },
+      { id: "bn_wise_tit", name: "Comprobante de titularidad de cuenta — Wise", note: "Titularidad cuenta Wise.", who: "you", translate: false },
+      { id: "bn_sant", name: "Certificado de saldo y titularidad — Santander", note: "Banco Santander.", who: "you", translate: false },
+      { id: "bn_ib", name: "InteractiveBrokers — verificación de la información de la cuenta", note: "PDF IBKR.", who: "you", translate: true },
+    ],
   },
   {
-    title: "Antecedentes penales",
+    title: "Hacienda — modelos tributarios",
     items: [
-      { id:"ap1", name:"Antecedentes penales — titular (autorización MIT + declaración responsable sobre el extranjero)", note:"En el Modelo MIT: marcar la casilla para que consulten el Registro Central de Penados. Además: declaración responsable firmada de que no tienes antecedentes en Serbia ni en EE. UU. en los últimos 5 años (no requiere apostilla).", who:"you" },
-    ]
+      { id: "tx100", name: "Modelo 100 — IRPF ejercicio 2024", note: "Declaración de la renta (2024).", who: "you", translate: false },
+      { id: "tx210", name: "Modelo 210 — ejercicio 2023", note: "IRNR u otro; según gestor.", who: "you", translate: false },
+      { id: "tx130", name: "Modelo 130 — 1.º trimestre 2026", note: "Pago fraccionado IRPF autónomo.", who: "you", translate: false },
+      { id: "tx303", name: "Modelo 303 — 1.º trimestre 2026", note: "IVA trimestral.", who: "you", translate: false },
+    ],
   },
   {
-    title: "Documentos familiares",
+    title: "Seguridad Social y autónomo (RETA)",
     items: [
-      { id:"df1", name:"Certificado de matrimonio — apostillado y traducido", note:"Nuevo (no mayor de 6 meses) desde Serbia, apostillado y con traducción jurada en España", who:"fam" },
-      { id:"df2", name:"Certificados de nacimiento de los hijos — apostillados y traducidos", note:"Mismas condiciones que el certificado de matrimonio", who:"fam" },
-      { id:"df3", name:"Padrón Colectivo", note:"Certificado de empadronamiento familiar — se saca en el Ayuntamiento de Valencia, tiene que firmar solo tu esposa", who:"both" },
-      { id:"df4", name:"Certificado de matriculación — hijos (del colegio)", note:"Confirmación de que están matriculados en este curso escolar en Valencia", who:"fam" },
-    ]
-  }
+      { id: "ss_cc", name: "Certificado corriente de pago — Seguridad Social", note: "Situación de cotización al día.", who: "you", translate: false },
+      { id: "ss_vl", name: "Informe de vida laboral", note: "Descarga sede electrónica SS.", who: "you", translate: false },
+      { id: "ss_reta", name: "Alta en RETA — resolución", note: "Resolución de alta como autónomo.", who: "you", translate: false },
+    ],
+  },
+  {
+    title: "Hacienda — certificado de deudas",
+    items: [
+      { id: "aeat_cc", name: "Certificado corriente de pago — AEAT", note: "Situación con Hacienda.", who: "you", translate: false },
+    ],
+  },
+  {
+    title: "HealNow Inc. (sociedad y empleo)",
+    items: [
+      { id: "hn_cgs", name: "Certificado de buena situación — HealNow Inc.", note: "Delaware + Apostilla.", who: "you", translate: true },
+      { id: "hn_inc", name: "Certificate of Incorporation — HealNow Inc.", note: "Constitución sociedad (inglés).", who: "you", translate: true },
+      { id: "hn_ctr", name: "Contrato — Ivan Stepanovic y HealNow Inc.", note: "Contrato de prestación de servicios.", who: "you", translate: true },
+      { id: "hn_rem", name: "Authorization for Remote Work and Compensation — Ivan Stepanovic", note: "Carta teletrabajo / compensación (inglés).", who: "you", translate: true },
+      { id: "hn_pay", name: "Confirmación de las facturas por parte de HealNow Inc.", note: "Confirmación pagos a tu nombre.", who: "you", translate: true },
+    ],
+  },
+  {
+    title: "Familia, empadronamiento y vivienda",
+    items: [
+      { id: "fam_pad", name: "Padrón colectivo", note: "Empadronamiento familiar Valencia.", who: "both", translate: false },
+      { id: "fam_matr", name: "Certificado de matriculación escolar — Aleksej y Matija Stepanovic", note: "Colegio en Valencia, curso actual.", who: "fam", translate: false },
+      { id: "fam_cas", name: "Certificado de matrimonio (Serbia)", note: "Reciente; sin apostilla/traducción obligatoria en vuestro listado.", who: "fam", translate: false },
+      { id: "fam_nac_ale", name: "Certificado de nacimiento — Aleksej (Serbia)", note: "Un PDF por hijo.", who: "fam", translate: false },
+      { id: "fam_nac_mat", name: "Certificado de nacimiento — Matija (Serbia)", note: "Un PDF por hijo.", who: "fam", translate: false },
+      { id: "viv_ns", name: "Nota simple — vivienda en Valencia (apartamento)", note: "Registro de la Propiedad: titularidad y cargas del piso. Aún no en carpeta VISA.", who: "both", translate: false },
+    ],
+  },
+  {
+    title: "Antecedentes penales y declaraciones",
+    items: [
+      { id: "pen_pdf", name: "Antecedentes penales (certificado / informe)", note: "PDF del registro. Además: casilla MIT (RCP) + declaración responsable sobre penales en el extranjero (Serbia y EE. UU., 5 años).", who: "you", translate: false },
+    ],
+  },
 ];
 
-const KEY = "nomada_v2";
+const KEY = "nomada_v4";
+
+function migrateLegacyState(raw) {
+  if (!raw || typeof raw !== "object" || Array.isArray(raw)) return { done: {}, links: {} };
+  if (Object.prototype.hasOwnProperty.call(raw, "done") && typeof raw.done === "object") {
+    return { done: { ...raw.done }, links: typeof raw.links === "object" && raw.links ? { ...raw.links } : {} };
+  }
+  const done = {};
+  for (const [k, v] of Object.entries(raw)) {
+    if (typeof v === "boolean") done[k] = v;
+  }
+  return { done, links: {} };
+}
 
 function load() {
   try {
-    const c = document.cookie.split('; ').find(r => r.startsWith(KEY+'='));
-    if (c) return JSON.parse(decodeURIComponent(c.split('=').slice(1).join('=')));
-  } catch(e) {}
-  return {};
+    const c = document.cookie.split("; ").find(r => r.startsWith(KEY + "="));
+    if (c) return migrateLegacyState(JSON.parse(decodeURIComponent(c.split("=").slice(1).join("="))));
+  } catch (e) {}
+  return { done: {}, links: {} };
 }
 
 function save(st) {
-  const exp = new Date(); exp.setFullYear(exp.getFullYear()+1);
-  document.cookie = KEY+'='+encodeURIComponent(JSON.stringify(st))+'; expires='+exp.toUTCString()+'; path=/';
+  const exp = new Date();
+  exp.setFullYear(exp.getFullYear() + 1);
+  document.cookie =
+    KEY +
+    "=" +
+    encodeURIComponent(JSON.stringify({ done: st.done, links: st.links })) +
+    "; expires=" +
+    exp.toUTCString() +
+    "; path=/";
 }
 
 let state = load();
 
 const BADGES = {
-  you:  ['badge-you',  'Titular'],
-  fam:  ['badge-fam',  'Familia'],
-  both: ['badge-both', 'Todos'],
+  you: ["badge-you", "Titular"],
+  fam: ["badge-fam", "Familia"],
+  both: ["badge-both", "Todos"],
 };
 
+function safeDriveUrl(s) {
+  if (!s || typeof s !== "string") return "";
+  const t = s.trim();
+  if (!t) return "";
+  try {
+    const u = new URL(t);
+    if (u.protocol === "https:" || u.protocol === "http:") return u.href;
+  } catch (e) {}
+  return "";
+}
+
 function render() {
-  const sec = document.getElementById('sections');
-  sec.innerHTML = '';
-  DATA.forEach(s => {
-    const div = document.createElement('div');
-    div.className = 'section';
+  const sec = document.getElementById("sections");
+  sec.innerHTML = "";
+  DATA.forEach((s) => {
+    const div = document.createElement("div");
+    div.className = "section";
     div.innerHTML = `<p class="section-title">${s.title}</p>`;
-    s.items.forEach(item => {
-      const done = !!state[item.id];
+    s.items.forEach((item) => {
+      const done = !!state.done[item.id];
       const [bc, bl] = BADGES[item.who];
-      const row = document.createElement('div');
-      row.className = 'doc-item' + (done ? ' done' : '');
+      const trYes = item.translate === true;
+      const trIconGlobe =
+        '<svg class="badge-tr-ico" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="8" r="6.25"/><path d="M1.75 8h12.5"/><path d="M8 1.75c1.65 2.15 1.65 10.1 0 12.5M8 1.75c-1.65 2.15-1.65 10.1 0 12.5"/></svg>';
+      const trBadgeHtml = trYes
+        ? `<span class="badge-tr badge-tr-yes"><span class="badge-tr-split">${trIconGlobe}<span>Requiere traducción</span></span></span>`
+        : `<span class="badge-tr badge-tr-no">Sin traducción</span>`;
+      const linkRaw = state.links[item.id] || "";
+      const linkSafe = safeDriveUrl(linkRaw);
+
+      const row = document.createElement("div");
+      row.className = "doc-item" + (done ? " done" : "");
       row.innerHTML = `
         <div class="checkbox">
           <svg class="checkmark" viewBox="0 0 11 9" fill="none">
@@ -361,10 +515,57 @@ function render() {
           </svg>
         </div>
         <div class="doc-text">
-          <div class="doc-name">${item.name}<span class="badge ${bc}">${bl}</span></div>
+          <div class="doc-name">${item.name}<span class="badge ${bc}">${bl}</span>${trBadgeHtml}</div>
           <div class="doc-note">${item.note}</div>
+          <div class="doc-drive">
+            <span class="drive-label">Enlace</span>
+            <input type="url" class="drive-url" data-doc-id="${item.id}" placeholder="https://drive.google.com/..." autocomplete="off" spellcheck="false" />
+          </div>
         </div>`;
-      row.addEventListener('click', () => { state[item.id] = !state[item.id]; save(state); render(); });
+
+      const driveWrap = row.querySelector(".doc-drive");
+      const input = row.querySelector("input.drive-url");
+      if (input) {
+        input.value = linkRaw;
+        input.addEventListener("click", (e) => e.stopPropagation());
+        let persistTimer;
+        input.addEventListener("input", () => {
+          clearTimeout(persistTimer);
+          persistTimer = setTimeout(() => {
+            const v = input.value.trim();
+            if (v) state.links[item.id] = v;
+            else delete state.links[item.id];
+            save(state);
+          }, 500);
+        });
+        input.addEventListener("blur", () => {
+          clearTimeout(persistTimer);
+          const v = input.value.trim();
+          if (v) state.links[item.id] = v;
+          else delete state.links[item.id];
+          save(state);
+          render();
+        });
+      }
+
+      if (linkSafe && driveWrap) {
+        const a = document.createElement("a");
+        a.className = "drive-open";
+        a.href = linkSafe;
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+        a.textContent = "Abrir";
+        a.addEventListener("click", (e) => e.stopPropagation());
+        driveWrap.appendChild(a);
+      }
+
+      row.addEventListener("click", (e) => {
+        if (e.target.closest(".doc-drive")) return;
+        state.done[item.id] = !state.done[item.id];
+        save(state);
+        render();
+      });
+
       div.appendChild(row);
     });
     sec.appendChild(div);
@@ -373,15 +574,19 @@ function render() {
 }
 
 function updateStats() {
-  const all = DATA.flatMap(s => s.items);
-  const done = all.filter(i => state[i.id]).length;
-  document.getElementById('done').textContent = done;
-  document.getElementById('total').textContent = all.length;
-  document.getElementById('bar').style.width = (done/all.length*100).toFixed(0)+'%';
+  const all = DATA.flatMap((s) => s.items);
+  const done = all.filter((i) => state.done[i.id]).length;
+  document.getElementById("done").textContent = done;
+  document.getElementById("total").textContent = all.length;
+  document.getElementById("bar").style.width = all.length ? (done / all.length) * 100 + "%" : "0%";
 }
 
 function resetAll() {
-  if (confirm('¿Seguro que quieres reiniciar todos los documentos?')) { state = {}; save(state); render(); }
+  if (confirm("¿Seguro que quieres reiniciar todos los documentos y enlaces de Drive?")) {
+    state = { done: {}, links: {} };
+    save(state);
+    render();
+  }
 }
 
 render();
